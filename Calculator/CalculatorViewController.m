@@ -7,28 +7,48 @@
 //
 
 #import "CalculatorViewController.h"
+#import "CalculatorBrain.h"
 
-@interface CalculatorViewController ()
-
+@interface CalculatorViewController()
+@property (nonatomic) BOOL userIsInTheMiddleOfEnteringNumber;
+@property (nonatomic, strong) CalculatorBrain *brain;
 @end
 
 @implementation CalculatorViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+@synthesize display = _display;
+@synthesize userIsInTheMiddleOfEnteringNumber = _userIsInTheMiddleOfEnteringNumber;
+@synthesize brain = _brain;
+
+- (CalculatorBrain *)brain{
+    if(!_brain) _brain = [[CalculatorBrain alloc] init];
+    return _brain;
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
+
+- (IBAction)digitPressed:(UIButton *)sender {
+    
+    NSString *digit = sender.currentTitle;
+
+    if(self.userIsInTheMiddleOfEnteringNumber){
+        self.display.text = [self.display.text stringByAppendingString:digit];
+    }
+    else{
+        self.display.text = digit;
+        self.userIsInTheMiddleOfEnteringNumber = YES;
+    }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+- (IBAction)operationPressed:(UIButton *)sender {
+    if(self.userIsInTheMiddleOfEnteringNumber) [self enterPressed];
+    double result = [self.brain performOperantion:sender.currentTitle];
+    NSString *resultString = [NSString stringWithFormat:@"%g", result];
+    self.display.text = resultString;
+}
+
+- (IBAction)enterPressed {
+    [self.brain pushOperand:[self.display.text doubleValue]];
+    self.userIsInTheMiddleOfEnteringNumber = NO;
 }
 
 @end
