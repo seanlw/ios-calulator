@@ -45,10 +45,21 @@
     else if([operation isEqualToString:@"-"]){
         result = [self popOperand] - [self popOperand];
     }
+    else if([operation isEqualToString:@"/"]){
+        result = [self popOperand] / [self popOperand];
+    }
+    else if([operation isEqualToString:@"*"]){
+        result = [self popOperand] * [self popOperand];
+    }
+    
     
     [self pushOperand:result];
     
     return result;
+}
+
+- (void)clearOperands{
+    [self.operandStack removeAllObjects];
 }
 
 @end

@@ -39,16 +39,21 @@
     }
 }
 
+- (IBAction)enterPressed {
+    [self.brain pushOperand:[self.display.text doubleValue]];
+    self.userIsInTheMiddleOfEnteringNumber = NO;
+}
+
 - (IBAction)operationPressed:(UIButton *)sender {
     if(self.userIsInTheMiddleOfEnteringNumber) [self enterPressed];
     double result = [self.brain performOperantion:sender.currentTitle];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
     self.display.text = resultString;
 }
-
-- (IBAction)enterPressed {
-    [self.brain pushOperand:[self.display.text doubleValue]];
+- (IBAction)clearPressed {
+    self.display.text = [NSString stringWithFormat:@"%g", 0];
     self.userIsInTheMiddleOfEnteringNumber = NO;
+    [self.brain clearOperands];
 }
 
 @end
