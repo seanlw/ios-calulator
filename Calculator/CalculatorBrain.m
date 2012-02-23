@@ -29,7 +29,7 @@
 - (double)performOperantion:(NSString *)operation{
     
     [self.programStack addObject:operation];
-    return [CalculatorBrain runProgram:self.program];
+    return [[self class] runProgram:self.program];
 }
 
 - (id)program{
