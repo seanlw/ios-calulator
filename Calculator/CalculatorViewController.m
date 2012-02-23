@@ -17,6 +17,7 @@
 @implementation CalculatorViewController
 
 @synthesize display = _display;
+@synthesize operationsDisplay = _operationsDisplay;
 @synthesize userIsInTheMiddleOfEnteringNumber = _userIsInTheMiddleOfEnteringNumber;
 @synthesize brain = _brain;
 
@@ -42,18 +43,48 @@
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringNumber = NO;
+    
+    self.operationsDisplay.text = [[self.operationsDisplay.text stringByAppendingFormat:self.display.text] stringByAppendingFormat:@" "];
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
-    if(self.userIsInTheMiddleOfEnteringNumber) [self enterPressed];
     double result = [self.brain performOperantion:sender.currentTitle];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
     self.display.text = resultString;
+    
+    self.operationsDisplay.text = [[self.operationsDisplay.text stringByAppendingFormat:sender.currentTitle] stringByAppendingFormat:@" "];
 }
+
 - (IBAction)clearPressed {
-    self.display.text = [NSString stringWithFormat:@"%g", 0];
+    self.display.text = @"0";
+    self.operationsDisplay.text = @"";
+    
     self.userIsInTheMiddleOfEnteringNumber = NO;
     [self.brain clearOperands];
 }
 
+- (IBAction)decimalPressed:(UIButton *)sender {
+    NSRange range = [self.display.text rangeOfString:@"."];
+    if(range.location == NSNotFound){
+        self.display.text = [self.display.text stringByAppendingFormat:@"."];
+        self.userIsInTheMiddleOfEnteringNumber = YES;
+    }
+}
+
+- (IBAction)backspacePressed {
+    if(self.userIsInTheMiddleOfEnteringNumber){
+        if([self.display.text length] > 1){
+            self.display.text = [self.display.text substringToIndex:[self.display.text length] - 1];
+        }
+        else{
+            self.display.text = @"0";
+            self.userIsInTheMiddleOfEnteringNumber = NO;
+        }
+    }
+}
+
+- (void)viewDidUnload {
+    [self setOperationsDisplay:nil];
+    [super viewDidUnload];
+}
 @end
