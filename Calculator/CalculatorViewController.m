@@ -48,6 +48,7 @@
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
+    if(self.userIsInTheMiddleOfEnteringNumber) [self enterPressed];
     double result = [self.brain performOperantion:sender.currentTitle];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
     self.display.text = resultString;

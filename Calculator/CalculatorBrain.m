@@ -10,15 +10,22 @@
 
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
+@property (nonatomic, strong) NSMutableArray *descriptionStack;
 @end
 
 @implementation CalculatorBrain
 
 @synthesize programStack = _programStack;
+@synthesize descriptionStack = _descriptionStack;
 
 - (NSMutableArray *)programStack{
     if(_programStack == nil) _programStack = [[NSMutableArray alloc] init];
     return _programStack;
+}
+
+- (NSMutableArray *)descriptionStack{
+    if(_descriptionStack == nil) _descriptionStack = [[NSMutableArray alloc] init];
+    return _descriptionStack;
 }
 
 - (void)pushOperand:(double)operand{
@@ -32,12 +39,13 @@
     return [[self class] runProgram:self.program];
 }
 
-- (id)program{
-    return [self.programStack copy];
+- (void)clearOperands{
+    [self.programStack removeAllObjects];
+    [self.descriptionStack removeAllObjects];
 }
 
-+ (NSString *)descriptionOfProgram:(id)program{
-    return @"Implement this in A2";
+- (id)program{
+    return [self.programStack copy];
 }
 
 + (double)popOperandOffStack:(NSMutableArray *)stack{
@@ -91,8 +99,52 @@
     return [self popOperandOffStack:stack];
 }
 
-- (void)clearOperands{
-    [self.programStack removeAllObjects];
++ (double)runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues{
+    NSMutableArray *stack;
+    
+    if([program isKindOfClass:[NSArray class]]){
+        stack = [program mutableCopy];
+        /* steping through the stack to replace variableValues */
+        for(NSUInteger i = 0;i < [stack count]; i++){
+            if([[stack objectAtIndex:i] isKindOfClass:[NSString class]] && ![self isOperation:[stack objectAtIndex:i]]){
+                NSNumber *variableValue = [variableValues objectForKey:[stack objectAtIndex:i]];
+                if(!variableValue) variableValue = 0;
+                [stack replaceObjectAtIndex:i withObject:variableValue];
+            }
+        }
+    }
+    
+    return [self popOperandOffStack:stack];
+}
+
++ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack{
+    
+}
+
++ (NSString *)descriptionOfProgram:(id)program{
+    NSMutableArray * stack;
+    if([program isKindOfClass:[NSArray class]]){
+        stack = [program mutableCopy];
+    }
+    
+    return [self descriptionOfTopOfStack:stack];
+}
+
++ (BOOL)isOperation:(NSString *)operation{
+    return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", @"sin", @"cos", @"√", @"π", nil] containsObject:operation];
+}
+
++ (NSSet *)variablesUsedInProgram:(id)program{
+    NSMutableSet *result;
+    
+    for(id operand in program){
+        if([operand isKindOfClass:[NSString class]] && ![self isOperation:operand]){
+            if(!result) result = [[NSMutableSet alloc] init];
+            [result addObject:operand];
+        }
+    }
+    
+    return [result copy];
 }
 
 @end
