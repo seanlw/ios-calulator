@@ -43,8 +43,6 @@
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringNumber = NO;
-    
-    self.operationsDisplay.text = [[self.operationsDisplay.text stringByAppendingFormat:self.display.text] stringByAppendingFormat:@" "];
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
@@ -53,7 +51,7 @@
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
     self.display.text = resultString;
     
-    self.operationsDisplay.text = [[self.operationsDisplay.text stringByAppendingFormat:sender.currentTitle] stringByAppendingFormat:@" "];
+    self.operationsDisplay.text = [self.brain describeProgram];
 }
 
 - (IBAction)clearPressed {

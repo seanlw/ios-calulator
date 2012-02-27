@@ -10,22 +10,15 @@
 
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
-@property (nonatomic, strong) NSMutableArray *descriptionStack;
 @end
 
 @implementation CalculatorBrain
 
 @synthesize programStack = _programStack;
-@synthesize descriptionStack = _descriptionStack;
 
 - (NSMutableArray *)programStack{
     if(_programStack == nil) _programStack = [[NSMutableArray alloc] init];
     return _programStack;
-}
-
-- (NSMutableArray *)descriptionStack{
-    if(_descriptionStack == nil) _descriptionStack = [[NSMutableArray alloc] init];
-    return _descriptionStack;
 }
 
 - (void)pushOperand:(double)operand{
@@ -39,9 +32,12 @@
     return [[self class] runProgram:self.program];
 }
 
+- (NSString *)describeProgram{
+    return [[self class] descriptionOfProgram:self.program];
+}
+
 - (void)clearOperands{
     [self.programStack removeAllObjects];
-    [self.descriptionStack removeAllObjects];
 }
 
 - (id)program{
@@ -118,11 +114,34 @@
 }
 
 + (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack{
+    NSString *result = [NSString stringWithFormat:@""];
     
+    id topOfStack = [stack lastObject];
+    if(topOfStack) [stack removeLastObject];
+    
+    if([topOfStack isKindOfClass:[NSNumber class]]){
+        /* do some stuff if it's a operand */
+        result = [NSString stringWithFormat:@"%g", [topOfStack doubleValue]];
+    }
+    else if([topOfStack isKindOfClass:[NSString class]]){
+        /* do some stuff if it's a operand or variable */
+        if([self isTwoOperandOperation:topOfStack]){
+            NSString *right = [self descriptionOfTopOfStack:stack];
+            result = [NSString stringWithFormat:@"(%@ %@ %@)",[self descriptionOfTopOfStack:stack], topOfStack, right];   
+        }
+        else if([self isSingleOperandOperation:topOfStack]){
+            result = [NSString stringWithFormat:@"%@(%@)", topOfStack, [self descriptionOfTopOfStack:stack]];
+        }
+        else{
+            result = topOfStack;
+        }
+    }
+
+    return result;
 }
 
 + (NSString *)descriptionOfProgram:(id)program{
-    NSMutableArray * stack;
+    NSMutableArray *stack;
     if([program isKindOfClass:[NSArray class]]){
         stack = [program mutableCopy];
     }
@@ -132,6 +151,14 @@
 
 + (BOOL)isOperation:(NSString *)operation{
     return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", @"sin", @"cos", @"√", @"π", nil] containsObject:operation];
+}
+
++ (BOOL)isTwoOperandOperation:(NSString *)operation{
+    return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", nil] containsObject:operation];
+}
+
++ (BOOL)isSingleOperandOperation:(NSString *)operation{
+    return [[NSSet setWithObjects:@"sin", @"cos", @"√", nil] containsObject:operation];
 }
 
 + (NSSet *)variablesUsedInProgram:(id)program{
