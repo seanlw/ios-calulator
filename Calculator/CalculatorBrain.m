@@ -44,6 +44,18 @@
     return [self.programStack copy];
 }
 
++ (BOOL)isOperation:(NSString *)operation{
+    return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", @"sin", @"cos", @"√", @"π", nil] containsObject:operation];
+}
+
++ (BOOL)isTwoOperandOperation:(NSString *)operation{
+    return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", nil] containsObject:operation];
+}
+
++ (BOOL)isSingleOperandOperation:(NSString *)operation{
+    return [[NSSet setWithObjects:@"sin", @"cos", @"√", nil] containsObject:operation];
+}
+
 + (double)popOperandOffStack:(NSMutableArray *)stack{
     double result = 0;
     
@@ -147,18 +159,6 @@
     }
     
     return [self descriptionOfTopOfStack:stack];
-}
-
-+ (BOOL)isOperation:(NSString *)operation{
-    return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", @"sin", @"cos", @"√", @"π", nil] containsObject:operation];
-}
-
-+ (BOOL)isTwoOperandOperation:(NSString *)operation{
-    return [[NSSet setWithObjects:@"+", @"-", @"/", @"*", nil] containsObject:operation];
-}
-
-+ (BOOL)isSingleOperandOperation:(NSString *)operation{
-    return [[NSSet setWithObjects:@"sin", @"cos", @"√", nil] containsObject:operation];
 }
 
 + (NSSet *)variablesUsedInProgram:(id)program{
