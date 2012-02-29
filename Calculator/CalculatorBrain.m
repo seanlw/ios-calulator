@@ -22,8 +22,11 @@
 }
 
 - (void)pushOperand:(double)operand{
-    
     [self.programStack addObject:[NSNumber numberWithDouble:operand]];
+}
+
+- (void)pushVarialbe:(NSString *)variable{
+    [self.programStack addObject:variable];
 }
 
 - (double)performOperantion:(NSString *)operation{
@@ -32,12 +35,29 @@
     return [[self class] runProgram:self.program];
 }
 
+- (double)performOperantion:(NSString *)operation usingVariableValues:(NSDictionary *)variableValues{
+    
+    [self.programStack addObject:operation];
+    return [[self class] runProgram:self.program usingVariableValues:variableValues];
+}
+
 - (NSString *)describeProgram{
     return [[self class] descriptionOfProgram:self.program];
 }
 
 - (void)clearOperands{
     [self.programStack removeAllObjects];
+}
+
+- (NSString *)describeVariablesInProgram:(NSDictionary *)variableValues{
+    NSString *result = @"";
+    NSSet *variables = [[self class] variablesUsedInProgram:self.program];
+    
+    for(NSString *variable in variables){
+        result = [result stringByAppendingFormat:@"%@ = %g ", variable, [[variableValues objectForKey:variable] doubleValue]];
+    }
+    
+    return result;
 }
 
 - (id)program{
@@ -116,7 +136,7 @@
         for(NSUInteger i = 0;i < [stack count]; i++){
             if([[stack objectAtIndex:i] isKindOfClass:[NSString class]] && ![self isOperation:[stack objectAtIndex:i]]){
                 NSNumber *variableValue = [variableValues objectForKey:[stack objectAtIndex:i]];
-                if(!variableValue) variableValue = 0;
+                if(!variableValue) variableValue = [NSNumber numberWithDouble:0];
                 [stack replaceObjectAtIndex:i withObject:variableValue];
             }
         }

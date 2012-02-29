@@ -12,20 +12,27 @@
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringNumber;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSMutableDictionary *testVariableValues;
 @end
 
 @implementation CalculatorViewController
 
 @synthesize display = _display;
 @synthesize operationsDisplay = _operationsDisplay;
+@synthesize variableDisplay = _variableDisplay;
 @synthesize userIsInTheMiddleOfEnteringNumber = _userIsInTheMiddleOfEnteringNumber;
 @synthesize brain = _brain;
+@synthesize testVariableValues = _testVariableValues;
 
 - (CalculatorBrain *)brain{
     if(!_brain) _brain = [[CalculatorBrain alloc] init];
     return _brain;
 }
 
+- (NSMutableDictionary *)testVariableValues{
+    if(!_testVariableValues) _testVariableValues = [[NSMutableDictionary alloc] init];
+    return _testVariableValues;
+}
 
 - (IBAction)digitPressed:(UIButton *)sender {
     
@@ -47,16 +54,18 @@
 
 - (IBAction)operationPressed:(UIButton *)sender {
     if(self.userIsInTheMiddleOfEnteringNumber) [self enterPressed];
-    double result = [self.brain performOperantion:sender.currentTitle];
+    double result = [self.brain performOperantion:sender.currentTitle usingVariableValues:[self.testVariableValues copy]];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
     self.display.text = resultString;
     
     self.operationsDisplay.text = [self.brain describeProgram];
+    self.variableDisplay.text = [self.brain describeVariablesInProgram:[self.testVariableValues copy]];
 }
 
 - (IBAction)clearPressed {
     self.display.text = @"0";
     self.operationsDisplay.text = @"";
+    self.variableDisplay.text = @"";
     
     self.userIsInTheMiddleOfEnteringNumber = NO;
     [self.brain clearOperands];
@@ -82,8 +91,22 @@
     }
 }
 
+- (IBAction)variablePressed:(UIButton *)sender {
+    [self.brain pushVarialbe:sender.currentTitle];
+    self.userIsInTheMiddleOfEnteringNumber = NO;
+}
+
+- (IBAction)testPressed:(UIButton *)sender {
+    if([sender.currentTitle isEqualToString:@"Test 1"]){
+        [self.testVariableValues setObject:[NSNumber numberWithDouble:5] forKey:@"x"];
+        [self.testVariableValues setObject:[NSNumber numberWithDouble:4.8] forKey:@"y"];
+        [self.testVariableValues setObject:[NSNumber numberWithDouble:0] forKey:@"foo"];
+    }
+}
+
 - (void)viewDidUnload {
     [self setOperationsDisplay:nil];
+    [self setVariableDisplay:nil];
     [super viewDidUnload];
 }
 @end
