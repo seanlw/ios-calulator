@@ -134,9 +134,9 @@
         stack = [program mutableCopy];
         /* steping through the stack to replace variableValues */
         for(NSUInteger i = 0;i < [stack count]; i++){
-            if([[stack objectAtIndex:i] isKindOfClass:[NSString class]] && ![self isOperation:[stack objectAtIndex:i]]){
+            if([[stack objectAtIndex:i] isKindOfClass:[NSString class]] && ![self isOperation:[stack objectAtIndex:i]]) {
                 NSNumber *variableValue = [variableValues objectForKey:[stack objectAtIndex:i]];
-                if(!variableValue) variableValue = [NSNumber numberWithDouble:0];
+                if(!variableValue) variableValue = [NSNumber numberWithDouble:0.0];
                 [stack replaceObjectAtIndex:i withObject:variableValue];
             }
         }

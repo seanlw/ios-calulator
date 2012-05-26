@@ -8,6 +8,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringNumber;
@@ -101,6 +102,15 @@
         [self.testVariableValues setObject:[NSNumber numberWithDouble:5] forKey:@"x"];
         [self.testVariableValues setObject:[NSNumber numberWithDouble:4.8] forKey:@"y"];
         [self.testVariableValues setObject:[NSNumber numberWithDouble:0] forKey:@"foo"];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Graph"]) {
+        [segue.destinationViewController setDescription:[self.brain describeProgram]];
+        [segue.destinationViewController setBrain:self.brain];
+        [segue.destinationViewController setGraphVariables:self.testVariableValues];
     }
 }
 

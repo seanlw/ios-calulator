@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14485C4A157103BA00D956B2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14485C48157103BA00D956B2 /* MainStoryboard.storyboard */; };
 		14D4BA2C14F4752500376CA7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D4BA2B14F4752500376CA7 /* UIKit.framework */; };
 		14D4BA2E14F4752500376CA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D4BA2D14F4752500376CA7 /* Foundation.framework */; };
 		14D4BA3014F4752500376CA7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D4BA2F14F4752500376CA7 /* CoreGraphics.framework */; };
@@ -18,10 +19,10 @@
 		D11F0473156E8D73008E514E /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = D11F0472156E8D73008E514E /* AxesDrawer.m */; };
 		D11F0477156E909B008E514E /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D11F0476156E909B008E514E /* GraphViewController.m */; };
 		D11F047A156E9DB5008E514E /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = D11F0479156E9DB5008E514E /* GraphView.m */; };
-		D14B9C2814FE6A0B0035EE52 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D14B9C2614FE6A0B0035EE52 /* MainStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14485C49157103BA00D956B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		14D4BA2714F4752500376CA7 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D4BA2B14F4752500376CA7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		14D4BA2D14F4752500376CA7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -42,7 +43,6 @@
 		D11F0476156E909B008E514E /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
 		D11F0478156E9DB5008E514E /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
 		D11F0479156E9DB5008E514E /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
-		D14B9C2714FE6A0B0035EE52 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,9 +89,9 @@
 		14D4BA3114F4752500376CA7 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				14485C48157103BA00D956B2 /* MainStoryboard.storyboard */,
 				14D4BA3A14F4752500376CA7 /* CalculatorAppDelegate.h */,
 				14D4BA3B14F4752500376CA7 /* CalculatorAppDelegate.m */,
-				D14B9C2614FE6A0B0035EE52 /* MainStoryboard.storyboard */,
 				14D4BA4C14F4821700376CA7 /* CalculatorBrain.h */,
 				14D4BA4D14F4821700376CA7 /* CalculatorBrain.m */,
 				14D4BA4014F4752500376CA7 /* CalculatorViewController.h */,
@@ -171,7 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14D4BA3614F4752500376CA7 /* InfoPlist.strings in Resources */,
-				D14B9C2814FE6A0B0035EE52 /* MainStoryboard.storyboard in Resources */,
+				14485C4A157103BA00D956B2 /* MainStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,20 +195,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		14485C48157103BA00D956B2 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				14485C49157103BA00D956B2 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
 		14D4BA3414F4752500376CA7 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				14D4BA3514F4752500376CA7 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		D14B9C2614FE6A0B0035EE52 /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D14B9C2714FE6A0B0035EE52 /* en */,
-			);
-			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

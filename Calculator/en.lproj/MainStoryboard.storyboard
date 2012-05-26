@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="P0Y-CA-LxN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="P0Y-CA-LxN">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
+        <!--Calculator View Controller - Calculator-->
         <scene sceneID="5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -365,7 +367,7 @@
                                     <action selector="variablePressed:" destination="2" eventType="touchUpInside" id="feK-GC-fdm"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="d69-kx-ewF">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="d69-kx-ewF">
                                 <rect key="frame" x="20" y="434" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -384,7 +386,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="EVH-dV-Ggz" kind="push" id="VuZ-fG-AIU"/>
+                                    <segue destination="EVH-dV-Ggz" kind="push" identifier="Graph" id="VuZ-fG-AIU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -399,6 +401,7 @@
             </objects>
             <point key="canvasLocation" x="-418" y="-449"/>
         </scene>
+        <!--Graph View Controller-->
         <scene sceneID="G8p-bi-vJs">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gkh-a3-mJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -423,6 +426,7 @@
             </objects>
             <point key="canvasLocation" x="38" y="-445"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="s52-za-INY">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0yt-3q-FzX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -441,25 +445,6 @@
             <point key="canvasLocation" x="-944" y="-449"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CalculatorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="display" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="operationsDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="variableDisplay" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="GraphView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
-        </class>
-        <class className="GraphViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="graphView" candidateClass="GraphView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

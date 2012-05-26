@@ -13,6 +13,7 @@
 
 @synthesize scale = _scale;
 @synthesize origin = _origin;
+@synthesize dataSource = _dataSource;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -94,14 +95,36 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    //CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextRef context = UIGraphicsGetCurrentContext();
     
     
     [[UIColor purpleColor] setStroke];
     
     [AxesDrawer drawAxesInRect:rect originAtPoint:self.origin scale:self.scale];
     
-    
+    [[UIColor blueColor] setStroke];
+    CGContextBeginPath(context);
+    BOOL firstPointSet = NO;
+    for(int x = 0.0; x <= self.bounds.size.width; x++) {
+        CGPoint graphPoint;
+        CGFloat y = [self.dataSource getYAxesValueForGraphView:self xAxesPoint:x originAtPoint:self.origin scale:self.scale];
+        
+        graphPoint.x = x;
+        graphPoint.y = y;
+        if (CGRectContainsPoint(rect, graphPoint)) {
+            if (!firstPointSet) {
+                CGContextMoveToPoint(context, x, y);
+                firstPointSet = YES;
+            }
+            else {
+                CGContextAddLineToPoint(context, x, y);
+            }
+        }
+        else {
+            firstPointSet = NO; // might have gone off screen since last plot.
+        }
+    }
+    CGContextStrokePath(context);
     
 }
 

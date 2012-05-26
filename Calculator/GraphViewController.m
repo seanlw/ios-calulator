@@ -9,13 +9,21 @@
 #import "GraphViewController.h"
 #import "GraphView.h"
 
-@interface GraphViewController()
+@interface GraphViewController() <graphViewDatasource>
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
 @end
 
 @implementation GraphViewController
 
 @synthesize graphView = _graphView;
+@synthesize description = _description;
+@synthesize brain = _brain;
+@synthesize graphVariables = _graphVariables;
+
+- (void)setDescription:(NSString *)description{
+    _description = description;
+    self.title = self.description;
+}
 
 - (void)setGraphView:(GraphView *)graphView
 {
@@ -26,6 +34,16 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(tripleTap:)];
     [tapRecognizer setNumberOfTapsRequired:3];
     [self.graphView addGestureRecognizer:tapRecognizer];
+    self.graphView.dataSource = self;
+}
+
+- (CGFloat)getYAxesValueForGraphView:(GraphView *)sender xAxesPoint:(CGFloat)xAtPoint originAtPoint:(CGPoint)axisOrigin scale:(CGFloat)pointsPerUnit
+{
+    
+    [self.graphVariables setObject:[NSNumber numberWithDouble:((xAtPoint - axisOrigin.x) / pointsPerUnit)] forKey:@"x"];
+    double result = [[self.brain class] runProgram:self.brain.program usingVariableValues:self.graphVariables];
+    
+    return axisOrigin.y - (result * pointsPerUnit);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

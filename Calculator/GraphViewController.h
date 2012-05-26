@@ -7,8 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CalculatorBrain.h"
 
 @interface GraphViewController : UIViewController
 
+@property (nonatomic, weak) NSString *description;
+@property (nonatomic, weak) CalculatorBrain *brain;
+@property (nonatomic, weak) NSMutableDictionary *graphVariables;
 
 @end
