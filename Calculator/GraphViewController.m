@@ -41,9 +41,8 @@
 {
     
     [self.graphVariables setObject:[NSNumber numberWithDouble:((xAtPoint - axisOrigin.x) / pointsPerUnit)] forKey:@"x"];
-    double result = [[self.brain class] runProgram:self.brain.program usingVariableValues:self.graphVariables];
     
-    return axisOrigin.y - (result * pointsPerUnit);
+    return axisOrigin.y - ([[self.brain class] runProgram:self.brain.program usingVariableValues:self.graphVariables] * pointsPerUnit);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

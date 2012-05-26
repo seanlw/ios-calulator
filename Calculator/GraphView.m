@@ -107,17 +107,16 @@
     BOOL firstPointSet = NO;
     for(int x = 0.0; x <= self.bounds.size.width; x++) {
         CGPoint graphPoint;
-        CGFloat y = [self.dataSource getYAxesValueForGraphView:self xAxesPoint:x originAtPoint:self.origin scale:self.scale];
-        
         graphPoint.x = x;
-        graphPoint.y = y;
+        graphPoint.y = [self.dataSource getYAxesValueForGraphView:self xAxesPoint:x originAtPoint:self.origin scale:self.scale];
+        
         if (CGRectContainsPoint(rect, graphPoint)) {
             if (!firstPointSet) {
-                CGContextMoveToPoint(context, x, y);
+                CGContextMoveToPoint(context, graphPoint.x, graphPoint.y);
                 firstPointSet = YES;
             }
             else {
-                CGContextAddLineToPoint(context, x, y);
+                CGContextAddLineToPoint(context, graphPoint.x, graphPoint.y);
             }
         }
         else {
@@ -125,7 +124,6 @@
         }
     }
     CGContextStrokePath(context);
-    
 }
 
 
