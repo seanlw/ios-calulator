@@ -68,6 +68,11 @@
     return axisOrigin.y - ([[self.brain class] runProgram:self.brain.program usingVariableValues:self.graphVariables] * pointsPerUnit);
 }
 
+- (void)viewDidLoad
+{
+    [self.graphView loadUserGraphDefaults];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     return YES;

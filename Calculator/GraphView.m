@@ -39,6 +39,7 @@
 {
     if(scale != _scale){
         _scale = scale;
+        [self saveUserGraphDefaultsForScale];
         [self setNeedsDisplay];
     }
 }
@@ -60,8 +61,33 @@
 {
     if(origin.x != _origin.x && origin.y != _origin.y){
         _origin = origin;
+        [self saveUserGraphDefaultsForOrigin];
         [self setNeedsDisplay];
     }
+}
+
+- (void)saveUserGraphDefaultsForOrigin
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:NSStringFromCGPoint(self.origin) forKey:@"origin"];
+    [defaults synchronize];
+}
+
+- (void)saveUserGraphDefaultsForScale
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setFloat:self.scale forKey:@"scale"];
+    [defaults synchronize];
+}
+
+- (void)loadUserGraphDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.origin = CGPointFromString([defaults objectForKey:@"origin"]);
+    self.scale = [defaults floatForKey:@"scale"];
 }
 
 - (void)pinch:(UIPinchGestureRecognizer *)gesture
