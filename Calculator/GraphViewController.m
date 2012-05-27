@@ -11,6 +11,7 @@
 
 @interface GraphViewController() <graphViewDatasource>
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
+@property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
 @end
 
 @implementation GraphViewController
@@ -19,10 +20,32 @@
 @synthesize description = _description;
 @synthesize brain = _brain;
 @synthesize graphVariables = _graphVariables;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+@synthesize toolbar = _toolbar;
+
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+    if (_splitViewBarButtonItem != splitViewBarButtonItem) {
+        NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+        if (_splitViewBarButtonItem) [toolbarItems removeObject:_splitViewBarButtonItem];
+        if (splitViewBarButtonItem) [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
+        self.toolbar.items = toolbarItems;
+        _splitViewBarButtonItem = splitViewBarButtonItem;
+    }
+}
 
 - (void)setDescription:(NSString *)description{
     _description = description;
     self.title = self.description;
+    // display the description in the detail toolbar
+    if (self.splitViewController) {
+        NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+        UIBarButtonItem *baritem = [toolbarItems objectAtIndex:(toolbarItems.count - 2)];
+        baritem.title = self.description;
+        [toolbarItems replaceObjectAtIndex:(toolbarItems.count - 2) withObject:baritem];
+        self.toolbar.items = toolbarItems;
+    }
+    [self.graphView setNeedsDisplay];
 }
 
 - (void)setGraphView:(GraphView *)graphView

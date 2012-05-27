@@ -105,7 +105,7 @@
     [[UIColor blueColor] setStroke];
     CGContextBeginPath(context);
     BOOL firstPointSet = NO;
-    for(int x = 0.0; x <= self.bounds.size.width; x++) {
+    for(CGFloat x = 0.0; x <= self.bounds.size.width; x++) {
         CGPoint graphPoint;
         graphPoint.x = x;
         graphPoint.y = [self.dataSource getYAxesValueForGraphView:self xAxesPoint:x originAtPoint:self.origin scale:self.scale];
